@@ -1,0 +1,6 @@
+1. 최초의 경로 설정 하겠다 선언: git init
+2. 경로 설정: git remote add origin git@github.com/닉네임/리포지토리.git
+---------------------------------------
+3. 파일 추가하기 : git add . 
+4. 파일 커밋 (버전 이름 설정): git commit -m "버전명"
+5. 푸시하기: git push origin master
