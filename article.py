@@ -11,7 +11,7 @@ cnt = 0
 for i in range(0,60,10): #1~5페이지 스크래핑
     page += 1
     print(page)
-    url = "https://www.google.com/search?q={0}&tbm=nws&start={1}".format(keyword,page) #바로 뉴스탭 + 다음 페이지
+    url = "https://www.google.com/search?q={0}&tbm=nws&start={1}".format(keyword,i) #바로 뉴스탭 + 다음 페이지
     html = requests.get(url,headers = headers) #헤더값 추가/requests 요청
     html.raise_for_status() #값이 200이면 정상
     soup = BeautifulSoup(html.text, 'lxml') # bs로 html을 lxml로 파싱
