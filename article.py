@@ -1,4 +1,4 @@
-#version 1.0.1 (22/02/08)
+#version 2.0.0 (22/02/20)
 #version-naming : https://kiwinam.com/posts/33/version-naming/
 
 import requests
