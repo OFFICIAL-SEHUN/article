@@ -1,5 +1,4 @@
 #version 2.0.0 (22/02/20)
-import pyshorteners
 import requests
 from bs4 import BeautifulSoup
 keyword = input("keyword : ")
@@ -15,20 +14,27 @@ def crawler(keyword,i):
     soup = BeautifulSoup(html.text, 'lxml') # bs로 html을 lxml로 파싱
         
     articles = soup.find("div",attrs={"class":'v7W49e'}) #태그 찾기
-    #g-section = article.find('div',attrs={'class':'fhQnRd'}) # g-section news 조건문
+    s= articles.find('g-section-with-header',attrs={'class':'yG4QQe TBC9ub'}) #기사 전체에서 배너만 찾기 
     for article in articles:
-        link = article.find('a',attrs={'class':'WlydOe'})['href'] #링크 추출 
-        n2_lst.append(link)
-        press_name = article.find('span').get_text() #언론사 이름 추출
-        n2_lst.append(press_name)
-        article_name = article.find('div',attrs={'class':'mCBkyc y355M JQe2Ld nDgy9d'}).get_text() #기사제목 추출
-        n2_lst.append(article_name)
-        '''news_thumnail = article.find('img',attrs={'class':'rISBZc zr758c M4dUYb'})['src']
-        #url 단축 라이브러리 사용
-        sh_news_thumnail = pyshorteners.Shortener()
-        sh_news_thumnail = sh_news_thumnail.tinyurl.short(news_thumnail)
-        n2_lst.append(sh_news_thumnail)'''
         
+        if articles.find('g-section-with-header',attrs={'class':'yG4QQe TBC9ub'}): #기사 전체에서 배너만 찾기 
+            for banner in s :
+                banner_nws_link = banner.find('a',attrs={'class':'WlydOe'})['href']
+                print(banner_nws_link)
+                banner_press_name = banner.find('div',attrs={'class':'CEMjEf NUnG9d'}).get_text()
+                print(banner_press_name)
+                banner_article_name = banner.find('div',attrs={'class':'mCBkyc y355M nDgy9d'}).get_text() #기사제목 추출
+                print(banner_article_name)
+                print("-"*30)
+            
+        else:
+            link = article.find('a',attrs={'class':'WlydOe'})['href'] #링크 추출 
+            n2_lst.append(link)
+            press_name = article.find('span').get_text() #언론사 이름 추출
+            n2_lst.append(press_name)
+            article_name = article.find('div',attrs={'class':'mCBkyc y355M JQe2Ld nDgy9d'}).get_text() #기사제목 추출
+            n2_lst.append(article_name)
+
     return n2_lst
 def keyword_overlap_cnt():
     keyword_lst = []
@@ -45,8 +51,8 @@ def keyword_overlap_cnt():
         keyword_lst.append(press_name)
         article_name = article.find('div',attrs={'class':'mCBkyc y355M JQe2Ld nDgy9d'}).get_text() #기사제목 추출
         keyword_lst.append(article_name)
-    cnt = soup.find('div',attrs={'id':'result-stats'}).get_text() # 카운트 함수
+    cnt = soup.find('div',attrs={'id':'result-stats'}).get_text() # 카운트
     return cnt,keyword_lst
 
 print(crawler(keyword,i))
-print(keyword_overlap_cnt())
+
